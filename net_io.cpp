@@ -521,8 +521,7 @@ bool NetTcpIO::RunServer()
                 break;
             }
             if(Param.ServerFunc)
-                Param.ServerFunc([=, &newconnect](char* pbuf, int bufsize) { return ::recv(newconnect, pbuf, bufsize, 0); },
-                    [=, &newconnect](const char* pbuf, int bufsize) {return ::send(newconnect, pbuf, bufsize, 0); });
+                Param.ServerFunc(newconnect);
         }
     };
     listening = std::make_unique<std::thread>(listenfunc);

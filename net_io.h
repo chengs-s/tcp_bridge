@@ -100,8 +100,8 @@ public:
     static int sendto(SOCKET_T s, const void *buf, size_t size, std::string remote_ip, int remote_port);
 };
 
-// void(readfunc, writefunc);
-typedef std::function<void(std::function<int(char*, int)>, std::function<int(const char*, int)>)> TcpSerFunc;
+// connection handler invoked for each accepted TCP client socket
+typedef std::function<void(SOCKET_T)> TcpSerFunc;
 
 struct NetTcpPARAM
 {
@@ -176,7 +176,7 @@ public:
     NetTcpPARAM GetParam() { return Param; }
 
     //int  GetSockError();
-    bool CheckLinkOk() { return bOpen; }
+    bool CheckLinkOk() const { return bOpen; }
     bool Open();
     bool Close();
     bool isSocketReadable(int timeout_sec);
